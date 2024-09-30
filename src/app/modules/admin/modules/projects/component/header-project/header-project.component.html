@@ -1,0 +1,26 @@
+<div class="w-full flex xs:flex-col md:flex-row justify-between">
+    <div class="xs:mb-[20px] mt-1 pr-[15px]">
+        <app-button size="large" (click)="newProject()">
+            <span class="px-4 flex items-center">
+                <mat-icon>add</mat-icon>
+                New project
+            </span>
+        </app-button>
+    </div>
+    <div class="xs:w-full md:w-1/4">
+        <mat-form-field appearance="outline" class="xs:w-full">
+            <mat-select [(value)]="selectedFilter" (selectionChange)="handleFilter()">
+                <mat-option *ngFor="let quantityProject of quantityProjects; let i = index" [value]="selectFilters[i]">
+                    {{selectFilters[i]}} ({{quantityProjects[i].quantity}})
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <p class="xs:w-full md:w-1/2">
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Search by client or project name</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput [(ngModel)]="searchTerm" (ngModelChange)="handleFilter()">
+        </mat-form-field>
+    </p>
+</div>

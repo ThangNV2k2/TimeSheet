@@ -1,0 +1,21 @@
+<div class="relative w-[300px] h-[86px] px-[15px] pt-[13px] pb-[12px] bg-user-img bg-no-repeat">
+    <div class="flex justify-start items-center text-whiteColor">
+        <div class="cursor-pointer mr-3">
+            <img [src]="user?.avatarFullPath" class="h-[60px] w-[60px] rounded-full" />
+        </div>
+        <div>
+            <a href="#">
+                <div>{{ user?.name + ' ' + user?.surname }}</div>
+                <div>{{ user?.emailAddress }}</div>
+            </a>
+        </div>
+    </div>
+    <button mat-button [matMenuTriggerFor]="menu"
+        class="text-whiteColor absolute bottom-0 right-0"><mat-icon>keyboard_arrow_down</mat-icon></button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>input</mat-icon>
+            <span>Logout</span>
+        </button>
+    </mat-menu>
+</div>

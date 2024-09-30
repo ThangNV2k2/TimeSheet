@@ -1,0 +1,97 @@
+<form [formGroup]="generalForm">
+    <div
+        class="flex xs:flex-col xs:px-[15px] md:pb-0 px-[15px] pt-[15px] md:mb-0 md:flex-row w-full md:items-start md:justify-start mt-5">
+        <p class="w-[126px]"><strong>Client*</strong></p>
+        <mat-form-field appearance="outline" class="mr-[15px] md:w-1/2 xs:w-full">
+            <mat-select formControlName="customerId">
+                <mat-select-trigger *ngIf="!generalForm.value.customerId">
+                    <input placeholder="Choose a client...">
+                </mat-select-trigger>
+                <input placeholder="Search..." class="h-[42px] px-4" [(ngModel)]="searchClient"
+                    [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let client of clientList | filterClient:searchClient" [value]="client.id">{{
+                    client.name + ' - [' +
+                    client.code + ']' }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="generalForm.get('customerId')?.errors?.['required']" class="text-sm">
+                Project customer is required!
+            </mat-error>
+        </mat-form-field>
+
+        <app-button type="button" class="pr-[15px] mt-[5px] md:pl-[15px]" (click)="handleNewClient()">
+            <span class="flex items-center">
+                <mat-icon>add</mat-icon>
+                New Client
+            </span>
+        </app-button>
+    </div>
+
+    <div
+        class="flex xs:flex-col xs:py-[15px] md:pb-0 px-[15px] pt-[15px] md:flex-row w-full md:items-start md:justify-start">
+        <p class="w-[126px]"><strong>Project Name*</strong></p>
+        <mat-form-field appearance="outline" class="md:w-1/2 xs:w-full">
+            <input matInput placeholder="Project name" formControlName="name">
+            <mat-error *ngIf="generalForm.get('name')?.errors?.['required']" class="text-sm">
+                Project name is required!
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="flex xs:flex-col xs:p-[15px] md:flex-row w-full md:items-start md:justify-start">
+        <p class="w-[126px]"><strong>Project Code*</strong></p>
+
+        <mat-form-field appearance="outline" class="md:w-1/3 h-[55px] xs:w-full">
+            <input matInput placeholder="Project code" formControlName="code">
+            <mat-error *ngIf="generalForm.get('code')?.errors?.['required']" class="text-sm">
+                Project code is required!
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div
+        class="flex xs:flex-col xs:py-[15px] md:pb-0 px-[15px] pt-[15px] md:mb-0 md:flex-row w-full md:items-start md:justify-start">
+        <p class="w-[126px]"><strong>Date*</strong></p>
+        <mat-form-field appearance="outline" class="md:pr-2">
+            <input matInput placeholder="Start at" [matDatepicker]="pickerStart" formControlName="timeStart">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart color="primary"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="md:pl-2">
+            <input matInput placeholder="Start at" [matDatepicker]="pickerEnd" formControlName="timeEnd">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd color="primary"></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div
+        class="flex xs:flex-col xs:py-[15px] md:pb-0 px-[15px] pt-[15px] md:mb-0 md:flex-row w-full md:items-start md:justify-start">
+        <p class="w-[126px]"><strong>Note</strong></p>
+        <mat-form-field appearance="outline" class="md:ml-4 mr-2 w-full">
+            <textarea matInput formControlName="note"></textarea>
+        </mat-form-field>
+    </div>
+
+    <div class="flex mt-5 xs:flex-col xs:px-[15px] md:flex-row w-full md:items-start md:justify-start">
+        <p class="w-[126px]"><strong>All User</strong></p>
+        <mat-checkbox formControlName="isAllUserBelongTo" color="primary"><strong>Auto add user as a member of this
+                project when
+                creating new
+                user</strong></mat-checkbox>
+    </div>
+
+    <div class="flex mt-5 xs:flex-col xs:px-[15px] md:flex-row w-full md:items-start md:justify-start mb-5">
+        <p class="w-[126px]"><strong>Project Type*</strong></p>
+        <mat-radio-group color="primary" formControlName="projectType" class="flex flex-wrap text-semibold">
+            <mat-radio-button [value]="0" class="pr-6 py-2 font-semibold">T&M</mat-radio-button>
+            <mat-radio-button [value]="1" class="pr-6 py-2 font-semibold">Fixed
+                Frice</mat-radio-button>
+            <mat-radio-button [value]="2" class="pr-6 py-2 font-semibold">Non-Bill</mat-radio-button>
+            <mat-radio-button [value]="3" class="pr-6 py-2 font-semibold">ODC</mat-radio-button>
+            <mat-radio-button [value]="4" class="pr-6 py-2 font-semibold">Product</mat-radio-button>
+            <mat-radio-button [value]="5" class="pr-6 py-2 font-semibold">Training</mat-radio-button>
+            <mat-radio-button [value]="6" class="pr-6 py-2 font-semibold">NoSalary</mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <app-button (click)="nextRouter()" [disabled]="generalForm.invalid" class="ml-3">Next</app-button>
+</form>

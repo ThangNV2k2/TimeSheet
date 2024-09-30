@@ -1,0 +1,35 @@
+<div class="md:flex md: justify-between items-center pb-[15px]">
+    <div class="flex items-center md:w-auto">
+        <div class="h-[50px] w-[96px]">
+            <mat-button-toggle-group>
+                <mat-button-toggle
+                    (click)="calculatePreviousTime()"><mat-icon>chevron_left</mat-icon></mat-button-toggle>
+                <mat-button-toggle (click)="calculateNextTime()"><mat-icon>chevron_right</mat-icon></mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <span class="font-semibold text-[20px] ml-2">{{ [startDate, endDate] | rangeFormat:selectedRangeTime }}</span>
+    </div>
+
+    <div class="flex flex-col md:flex-row md:items-center">
+        <mat-form-field appearance="outline" class="md:mr-4 md:mt-[13px]">
+            <mat-select [(value)]="selectedRangeTime" (selectionChange)="updateDates()">
+                <mat-option *ngFor="let optionRangeTime of optionRangeTimes; let i = index"
+                    [value]="optionRangeTimes[i]">
+                    {{ optionRangeTimes[i] }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <app-button class="md:w-auto"><a>Export</a></app-button>
+    </div>
+</div>
+
+<div>
+    <mat-tab-group>
+        <mat-tab label="Tasks">
+            <app-task-project [taskList]="taskList"></app-task-project>
+        </mat-tab>
+        <mat-tab label="Team">
+            <app-team-project [userList]="userList"></app-team-project>
+        </mat-tab>
+    </mat-tab-group>
+</div>

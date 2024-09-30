@@ -1,0 +1,24 @@
+<div class="flex justify-between items-center border-b-[1px] pb-1 border-grayColor">
+    <div>
+        <app-strong-content size="medium">{{ project.name }}</app-strong-content>
+        <app-strong-content size="small" color="primary">{{ project.pms.join(', ') }}</app-strong-content>
+        <app-strong-content size="small" color="error">{{ project.activeMember + ' members'
+            }}</app-strong-content>
+        <app-strong-content size="small" color="warning">{{ mapProjectType.get(project.projectType)
+            }}</app-strong-content>
+        <app-strong-content size="small" color="success">{{ (project.timeStart | dateFormat) + ' - ' +
+            (project.timeEnd | dateFormat) }}</app-strong-content>
+    </div>
+    <div>
+        <button [matMenuTriggerFor]="menu" mat-raised-button aria-haspopup=" true">
+            Actions <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editProject()">
+                <mat-icon>edit</mat-icon>Edit</button>
+            <button mat-menu-item (click)="viewProject()"><mat-icon>remove_red_eye</mat-icon>View</button>
+            <button mat-menu-item><mat-icon>clear</mat-icon>Deactive</button>
+            <button mat-menu-item (click)="deleteProject()"><mat-icon>delete</mat-icon>Delete</button>
+        </mat-menu>
+    </div>
+</div>

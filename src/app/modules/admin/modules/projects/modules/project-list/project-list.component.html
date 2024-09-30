@@ -1,0 +1,14 @@
+<ul *ngIf="!loading" class="h-full overflow-y-auto">
+    <li *ngFor="let entry of projectList | keyvalue">
+        <app-expansion-panel [title]=" entry.key">
+            <ul>
+                <li *ngFor="let project of entry.value">
+                    <app-project-item [project]="project"></app-project-item>
+                </li>
+            </ul>
+        </app-expansion-panel>
+    </li>
+</ul>
+<div *ngIf="loading" class="flex justify-center items-center">
+    <mat-spinner></mat-spinner>
+</div>

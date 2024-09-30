@@ -1,0 +1,55 @@
+<div class="h-screen w-full bg-custom-background-blue flex items-center justify-center flex-col">
+    <p class="text-4xl text-whiteColor mb-8">Timesheet</p>
+    <form [formGroup]="loginForm" class="bg-whiteColor p-8 pb-10 rounded shadow-md mb-10 mt-10"
+        (ngSubmit)="onSubmitLogin()">
+        <p class="text-xl mb-4 text-center font-semibold text-primary-text">Log in</p>
+        <div class="mb-6 mt-6 flex flex-row items-center w-88">
+            <mat-icon matSuffix class="mr-4 text-regular-text text-2xl">person</mat-icon>
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>User Name Or Email</mat-label>
+                <input matInput [errorStateMatcher]="matcher" formControlName="userNameOrEmailAddress" required>
+                <mat-error
+                    *ngIf="loginForm.get('userNameOrEmailAddress')?.invalid && loginForm.get('userNameOrEmailAddress')?.touched">
+                    <div *ngIf="loginForm.get('userNameOrEmailAddress')?.errors?.['required']">Username or Email is
+                        required.
+                    </div>
+                    <div *ngIf="loginForm.get('userNameOrEmailAddress')?.errors?.['minlength']">Username or Email must
+                        be
+                        at
+                        least 5
+                        characters long.</div>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mb-8 flex flex-row items-center w-88">
+            <mat-icon matSuffix class="mr-4 text-regular-text text-2xl">lock</mat-icon>
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Password</mat-label>
+                <input matInput [errorStateMatcher]="matcher" [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password" required>
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                    <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+                    <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 5
+                        characters long.</div>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mb-8 flex justify-between">
+            <mat-checkbox color="primary" formControlName="rememberClient"
+                class="text-base text-regular-text font-semibold">Remember
+                me</mat-checkbox>
+            <app-button type="submit">
+                <span>Login</span>
+            </app-button>
+        </div>
+
+        <asl-google-signin-button (signInStatus)="loginWithGoogle()" type='standard' size="large"
+            theme="filled_blue"></asl-google-signin-button>
+
+    </form>
+    <p class="text-whiteColor mg">© 2024 Timesheet. <strong>Version</strong> 4.3.0.0 [20231608]</p>
+</div>

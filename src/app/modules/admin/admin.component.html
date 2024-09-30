@@ -1,0 +1,18 @@
+<div>
+    <div>
+        <app-header></app-header>
+    </div>
+    <mat-sidenav-container class="w-full h-[595px]">
+        <mat-sidenav class="w-[301px]" [mode]="(isSmallScreen | async) ? 'over' : 'side'"
+            [opened]="(isSmallScreen | async) ? 'false' : 'true'" position="start">
+            <app-sidebar></app-sidebar>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="p-[30px]">
+                <div class="shadow-[0px_0px_15px_0px_rgba(0,0,0,0.3)] w-full">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

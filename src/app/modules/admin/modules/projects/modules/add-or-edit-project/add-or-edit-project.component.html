@@ -1,0 +1,26 @@
+<div class="flex w-full justify-between p-[15px] border-b-[1px] border-border-lighter min-h-[300px]">
+  <div class="w-full">
+    <h2 *ngIf="!projectForm">Create Project</h2>
+    <h2 *ngIf="projectId && projectForm">Edit Project: {{ projectForm!.controls.generalForm.value.name }}</h2>
+
+    <mat-divider></mat-divider>
+
+    <div class="flex pt-5">
+      <div *ngFor="let route of routeLabel; let i = index " [routerLink]="canNavigate(i) ? route.routerLink : null"
+        [routerLinkActiveOptions]="{exact: true}" routerLinkActive="selected"
+        class="cursor-pointer h-14 w-32 flex justify-center items-center text-info">
+        <a>{{ route.label }}</a>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <form [formGroup]="projectForm" *ngIf="projectForm">
+      <router-outlet></router-outlet>
+      <div class="h-14 w-full flex justify-end bg-whiteColor items-center pr-[15px]">
+        <app-button class="mx-2 shadow-md rounded-sm shadow-placeholder" color="basic"><a
+            routerLink="/admin/projects">Cancel</a></app-button>
+        <app-button class="mx-2" [disabled]="disabledSubmit()" (click)="onSave()">Submit</app-button>
+      </div>
+    </form>
+  </div>
+</div>

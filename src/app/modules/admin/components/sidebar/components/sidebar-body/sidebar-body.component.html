@@ -1,0 +1,9 @@
+<ul class="w-[300px] h-[435px] overflow-y-auto custom-scrollbar">
+    <li *ngFor="let item of menuItems" [routerLink]="item.routerLink" [routerLinkActiveOptions]="{exact: true}"
+        routerLinkActive="selected" class="w-[100%] h-[54px] px-[13px] py-[10px] text-gray cursor-pointer">
+        <a class="flex items-center">
+            <mat-icon class="text-x2l">{{ item.icon }}</mat-icon>
+            <span class="ml-3 font-semibold">{{ item.label }}</span>
+        </a>
+    </li>
+</ul>

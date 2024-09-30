@@ -1,0 +1,59 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$custom-primary: mat.define-palette(mat.$red-palette);
+$custom-secondary: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$custom-tertiary: mat.define-palette(mat.$indigo-palette);
+
+$primary-theme: mat.define-light-theme((color: (primary: $custom-primary,
+        accent: $custom-secondary,
+        warn: $custom-primary,
+      )));
+$accent-theme: mat.define-light-theme((color: (primary: $custom-secondary,
+        accent: $custom-tertiary,
+        warn: $custom-primary,
+      )));
+$tertiary-theme: mat.define-light-theme((color: (primary: $custom-tertiary,
+        accent: $custom-tertiary,
+        warn: $custom-primary,
+      )));
+
+
+@include mat.all-component-themes($primary-theme);
+
+.primary-theme {
+  @include mat.all-component-themes($primary-theme);
+}
+
+.accent-theme {
+  @include mat.all-component-themes($accent-theme);
+}
+
+.tertiary-theme {
+  @include mat.all-component-themes($tertiary-theme);
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: red !important;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: red !important;
+  opacity: 0.8 !important;
+}
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: Roboto,
+    Arial,
+    Tahoma,
+    sans-serif;
+  ;
+}

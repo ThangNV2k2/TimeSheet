@@ -1,0 +1,134 @@
+<div class="my-5 flex w-full">
+    <div class="w-3/5 flex grow">
+        <mat-expansion-panel expanded="true" class="w-full">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <strong class="text-base">Selected member</strong>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="w-full flex flex-col">
+                <section class="w-full flex flex-col">
+                    <mat-checkbox color="primary" class="pt-4"><strong class="text-sm">Show deactive
+                            member</strong></mat-checkbox>
+                    <mat-checkbox color="primary" class="pt-4"><strong class="text-sm">Show Inactive
+                            user</strong></mat-checkbox>
+                </section>
+                <mat-form-field appearance="fill" class="w-full pr-5 pt-4">
+                    <mat-label>Search by name by email</mat-label>
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput [(ngModel)]="searchUserGroup">
+                </mat-form-field>
+                <div class="flex justify-end pr-5">
+                    <app-button size="small" (click)="showUsers = !showUsers">
+                        <span>{{ !showUsers ? 'Add users' : 'Edit users' }}</span>
+                    </app-button>
+                </div>
+            </div>
+
+            <div class="h-[250px] overflow-auto">
+                <ul *ngFor="let teamGroup of teamForm.controls; let i = index" [formGroup]="teamGroup">
+                    <ng-container
+                        *ngIf="teamGroup.value.userId !== null && teamGroup.value.userId !== undefined && getUser(teamGroup.value.userId) as user">
+                        <li class="h-[60px] my-2 flex">
+                            <div (click)="removeTeamForm(user.id)">
+                                <mat-icon>close</mat-icon>
+                            </div>
+                            <div class="pl-2">
+                                <img [src]="user.avatarFullPath">
+                                <span>Member</span>
+                            </div>
+                            <div class="pl-3 w-[220px]">
+                                <div>
+                                    <span><strong>{{ user.name }}</strong></span>
+                                    <span [style.background-color]="user.branchColor"
+                                        class="text-whiteColor px-[5px] py-[3px] ml-[5px] rounded-[10px] text-[11px] font-medium">{{
+                                        user.branchDisplayName }}</span>
+                                    <app-strong-content size="xs"
+                                        [color]="getNameType(user.type) === teamTypes.Collaborator ? 'primary' : getNameType(user.type) === teamTypes.Staff ? 'error' : 'warning'">{{
+                                        getNameType(user.type) }}</app-strong-content>
+                                </div>
+                                <div>
+                                    <span>{{ user.emailAddress }}</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <mat-form-field class="ml-2 w-[100px]">
+                                    <mat-select formControlName="type">
+                                        <mat-option *ngFor="let typeRole of typeRoles" [value]="typeRole.typeId">{{
+                                            typeRole.typeName }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </li>
+                    </ng-container>
+                    <mat-divider></mat-divider>
+                </ul>
+            </div>
+        </mat-expansion-panel>
+    </div>
+    <div *ngIf="showUsers" class="w-2/5 shadow-md">
+        <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <strong>Select team member</strong>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <div class="flex xs:flex-col lg:flex-row lg:justify-between lg:items-center">
+                    <mat-form-field class="xs:w-full lg:w-1/6">
+                        <mat-label>Branch</mat-label>
+                        <mat-select [value]="selectedBranch" (selectionChange)="selectedBranch = $event.value">
+                            <mat-option *ngFor="let branch of branches" [value]="branch.name">{{ branch.name
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="xs:w-full lg:w-1/6">
+                        <mat-label>Type</mat-label>
+                        <mat-select [value]="selectedType" (selectionChange)="selectedType = $event.value">
+                            <mat-option *ngFor="let typeProject of typeProjects" [value]="typeProject.typeId">{{
+                                typeProject.typeName }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="xs:w-full lg:w-1/2 mb-2">
+                        <mat-label>Search by name, email</mat-label>
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input matInput [(ngModel)]="searchUser">
+                    </mat-form-field>
+                </div>
+                <div class="h-[400px] w-full overflow-auto">
+                    <ul *ngFor="let user of users | filterMember:selectedBranch:selectedType:searchUser">
+                        <li class="h-[60px] pt-[5px] cursor-pointer flex" (click)="addUserForm(user.id)">
+                            <div>
+                                <mat-icon>keyboard_arrow_left</mat-icon>
+                            </div>
+                            <div class="pl-2">
+                                <img [src]="user.avatarFullPath">
+                                <span>Member</span>
+                            </div>
+                            <div class="ml-5">
+                                <div>
+                                    <span><strong>{{ user.name }}</strong></span>
+                                    <span [style.background-color]="user.branchColor"
+                                        class="text-whiteColor px-[5px] py-[3px] ml-[5px] rounded-[10px] text-[11px] font-medium">{{
+                                        user.branchDisplayName }}</span>
+                                    <app-strong-content size="xs"
+                                        [color]="getNameType(user.type) === teamTypes.Collaborator ? 'primary' : getNameType(user.type) === teamTypes.Staff ? 'error' : 'warning'">{{
+                                        getNameType(user.type) }}</app-strong-content>
+                                </div>
+                                <div>
+                                    <span>{{ user.emailAddress }}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </mat-expansion-panel>
+    </div>
+</div>
+<div>
+    <app-button (click)="backRoute()" color="basic">Back</app-button>
+    <app-button class="mx-2" (click)="nextRoute()">Next</app-button>
+</div>
